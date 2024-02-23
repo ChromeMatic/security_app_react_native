@@ -1,8 +1,7 @@
 import { SafeAreaView, Text, View } from "react-native";
-import { Link, useRouter, Stack } from "expo-router"
+import { Link} from "expo-router"
 
 const Home = () =>{
-    //const router = useRouter();
 
     return(
         <SafeAreaView className="flex-1 items-center justify-center bg-[#202124] space-y-6 px-4 py-2">
