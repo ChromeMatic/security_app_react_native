@@ -1,12 +1,34 @@
-import { SafeAreaView, Text, View } from "react-native";
-import { Link} from "expo-router"
+import { useCallback } from 'react';
+import { SafeAreaView, Text, View, TouchableOpacity } from "react-native";
+import {router} from 'expo-router'
+import { useFonts } from 'expo-font'
+import * as SplashScreen from 'expo-splash-screen'
+
+SplashScreen.preventAutoHideAsync();
 
 const Home = () =>{
 
+    const [ fontsLoaded, fontError ] = useFonts({
+        "Kode Mono": require('../assets/fonts/KodeMono-SemiBold.ttf')
+    })
+
+    const onLayoutRootView = useCallback(async () => {
+        if (fontsLoaded || fontError) {
+          await SplashScreen.hideAsync();
+        }
+      }, [fontsLoaded, fontError]);
+    
+      if (!fontsLoaded && !fontError) {
+        return null;
+      }
+
     return(
-        <SafeAreaView className="flex-1 items-center justify-center bg-[#202124] space-y-6 px-4 py-2">
+        <SafeAreaView 
+         onLayout={onLayoutRootView}
+         className="flex-1 items-center justify-center bg-[#020717] space-y-6 px-4 py-2"
+        >
             <Text
-                className="text-4xl text-center font-semibold text-white"
+                className="text-4xl text-center font-semibold text-white font-Kode"
             >
                Welcome The Security App
             </Text>
@@ -17,23 +39,26 @@ const Home = () =>{
                 🔐 Home Page 🔐
             </Text>
 
-            <View className="w-full px-8 py-4 flex-row space-x-4 justify-center items-center">
-
-                <Link
-                 className="text-teal-600 border-2 border-teal-700 px-12 py-2 rounded-md font-semibold"
-                 href='/auths/Login'
+            <View className="flex-row justify-center items-center w-full space-x-6">
+                <TouchableOpacity
+                 onPress={()=>{ router.push('/Screens/Login') }}
+                 className="bg-[#007EF3] rounded-full py-1.5 px-8 w-1/2 flex justify-center items-center"
                 >
-                    Login
-                </Link>
+                    <Text className="text-white font-light text-xl">
+                        Login
+                    </Text>
+                </TouchableOpacity>
 
-                <Link
-                className="text-teal-600 border-2 border-teal-700 px-12 py-2 rounded-md font-semibold" 
-                href='/auths/Register'
+                <TouchableOpacity
+                 onPress={()=>{ router.push('/Screens/Register') }}
+                 className="bg-green-500 rounded-full py-1.5 px-8 w-1/2 flex justify-center items-center"
                 >
-                    Register
-                </Link>
-
+                    <Text className="text-white font-light text-xl">
+                        Register
+                    </Text>
+                </TouchableOpacity>
             </View>
+
         </SafeAreaView>
     )
 }
