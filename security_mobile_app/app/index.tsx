@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { SafeAreaView, Text, View, TouchableOpacity } from "react-native";
+import { SafeAreaView, Text, View, TouchableOpacity, Image } from "react-native";
 import {router} from 'expo-router'
 import { useFonts } from 'expo-font'
 import * as SplashScreen from 'expo-splash-screen'
@@ -7,6 +7,8 @@ import * as SplashScreen from 'expo-splash-screen'
 SplashScreen.preventAutoHideAsync();
 
 const Home = () =>{
+
+    const img = require('../images/pic.png')
 
     const [ fontsLoaded, fontError ] = useFonts({
         "Kode Mono": require('../assets/fonts/KodeMono-SemiBold.ttf')
@@ -33,15 +35,15 @@ const Home = () =>{
                Welcome The Security App
             </Text>
 
-            <Text
-                className="text-xl text-white"
-            >
-                🔐 Home Page 🔐
-            </Text>
+            
+            <Image 
+             source={img} 
+             className="h-64 w-1/2 rounded-md"
+            />
 
             <View className="flex-row justify-center items-center w-full space-x-6">
                 <TouchableOpacity
-                 onPress={()=>{ router.push('/Screens/Login') }}
+                 onPress={()=>{ router.push('/Login') }}
                  className="bg-[#007EF3] rounded-full py-1.5 px-8 w-1/2 flex justify-center items-center"
                 >
                     <Text className="text-white font-light text-xl">
@@ -50,7 +52,7 @@ const Home = () =>{
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                 onPress={()=>{ router.push('/Screens/Register') }}
+                 onPress={()=>{ router.push('/Register') }}
                  className="bg-green-500 rounded-full py-1.5 px-8 w-1/2 flex justify-center items-center"
                 >
                     <Text className="text-white font-light text-xl">
