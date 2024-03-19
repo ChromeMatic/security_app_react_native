@@ -8,6 +8,10 @@ module.exports = {
       fontFamily: {
         Kode:"'Kode Mono', monospace;"
       },
+      colors:{
+        'main':'#020717',
+        'secondary':''
+      }
     },
   },
   plugins: [],

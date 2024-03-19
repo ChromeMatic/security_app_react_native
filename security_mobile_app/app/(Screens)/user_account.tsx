@@ -1,23 +1,15 @@
-import { useFonts } from 'expo-font'
 import { SafeAreaView, Text} from 'react-native'
 import { supabase } from "../../lib/supabase";
 import { useState, useEffect } from 'react';
 
-const main = () =>{
+const user_account = () =>{
 
-  type user = {
-    id:string,
-    frist_name:string,
-    last_name:string,
-    email_address:string,
-    user_Id:string
-  }
-
-    const [User, setUser] = useState("")
+    const [User, setUser] = useState({})
 
     async function get_login_user() {
-      const { data: { user } } = await supabase.auth.getUser()
-      //setUser(user?.user_metadata.email)
+        const user = await supabase.auth.getUser()
+        setUser(user.data)
+        return User
     }
 
     useEffect(()=>{ get_login_user() },[])
@@ -28,10 +20,10 @@ const main = () =>{
           items-center px-4 py-2 bg-main"
         >
             <Text className="text-white text-4xl">
-              {User}
+                User Account 
             </Text>
         </SafeAreaView>
     )
 }
 
-export default main
+export default user_account

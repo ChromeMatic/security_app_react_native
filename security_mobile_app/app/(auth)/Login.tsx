@@ -22,7 +22,7 @@ const Login = ()=>{
     }
 
     return(
-        <SafeAreaView className="w-full h-screen flex-1 items-start px-4 py-2 bg-[#020717]">
+        <SafeAreaView className="w-full h-screen flex-1 items-start px-4 py-2 bg-main">
 
             <View
               className="w-full h-full flex-1 justify-center space-y-2"
