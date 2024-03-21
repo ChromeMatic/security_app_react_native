@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { SafeAreaView, Text, View, TouchableOpacity, Image } from "react-native";
+import { SafeAreaView, Text, View, TouchableOpacity, Image, Alert } from "react-native";
 import {router} from 'expo-router'
 import { useFonts } from 'expo-font'
 import * as SplashScreen from 'expo-splash-screen'
@@ -27,10 +27,10 @@ const Home = () =>{
     return(
         <SafeAreaView 
          onLayout={onLayoutRootView}
-         className="flex-1 items-center justify-center bg-[#020717] space-y-6 px-4 py-2"
+         className="flex-1 items-center justify-center bg-green-100 space-y-6 px-4 py-2"
         >
             <Text
-                className="text-4xl text-center font-semibold text-white font-Kode"
+                className="text-4xl text-center font-semibold text-teal-800 font-Kode"
             >
                Welcome The Security App
             </Text>

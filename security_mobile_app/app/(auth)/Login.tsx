@@ -22,33 +22,33 @@ const Login = ()=>{
     }
 
     return(
-        <SafeAreaView className="w-full h-screen flex-1 items-start px-4 py-2 bg-main">
+        <SafeAreaView className="w-full h-screen flex-1 items-start px-4 py-2 bg-green-100">
 
             <View
               className="w-full h-full flex-1 justify-center space-y-2"
             >
 
-                <Text className="text-white text-center text-3xl py-4">
+                <Text className="text-teal-700 text-center text-5xl py-4">
                     Login
                 </Text>
 
-                <Text className="text-white text-xl">
+                <Text className="text-teal-700 text-xl">
                     Email Address
                 </Text>
 
                 <TextInput
-                    className="p-2 rounded-md w-full bg-[#161A29] text-teal-400"
+                    className="p-2 rounded-md w-full bg-white border-2 border-teal-300 text-teal-600"
                     value={email}
                     onChangeText={setEmail}
                     placeholder="Eg. jhonsnow@gmail.com"
                 />
 
-                <Text className="text-white text-xl pt-8">
+                <Text className="text-teal-700 text-xl pt-8">
                     Password
                 </Text>
 
                 <TextInput
-                    className="p-2 rounded-md w-full bg-[#161A29] text-white"
+                    className="p-2 rounded-md w-full bg-white border-2 border-teal-300 text-teal-600"
                     value={password}
                     onChangeText={setPassword}
                     placeholder="Eg. *******"
@@ -59,7 +59,7 @@ const Login = ()=>{
                     <Pressable 
                     onPress={LoginWithEmailPassword}
                     disabled={loading}
-                    className="rounded-full px-8 py-4 bg-indigo-500 text-white"
+                    className="rounded-md px-4 py-4 bg-indigo-500 text-white"
                     >
                         <Text className="text-center text-white font-semibold">
                             { loading ? 'Loading....':'LOGIN' }

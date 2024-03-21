@@ -15,6 +15,7 @@ const user_account = () =>{
     useEffect(()=>{ get_login_user() },[])
 
     return(
+        
         <SafeAreaView 
           className="w-full h-screen flex-1 justify-center 
           items-center px-4 py-2 bg-main"
