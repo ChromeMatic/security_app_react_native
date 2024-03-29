@@ -9,7 +9,7 @@ module.exports = {
         Kode:"'Kode Mono', monospace;"
       },
       colors:{
-        'main':'#020717',
+        'main':'#1A1710',
         'secondary':''
       }
     },

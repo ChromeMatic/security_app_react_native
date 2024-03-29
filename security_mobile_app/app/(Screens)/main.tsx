@@ -14,20 +14,44 @@ const main = () =>{
     user_Id:string
   }
 
-    const [User, setUser] = useState({} as user)
-    const [loading, setLoading] = useState(false)
+  type ScreenRoutesType = {
+    name:string,
+    route:string,
+  }
 
-    async function sign_out(){
-      const { error } = await supabase.auth.signOut()
+  let Screens:ScreenRoutesType[] = [
+    {
+      name:"home",
+      route:"/main"
+    },
+    {
+      name:"Account",
+      route:"/user_account"
+    },
+    {
+      name:"Alarm",
+      route:"/alarm_system"
+    },
+    {
+      name:"Settings",
+      route:"/settings"
+    },
+  ]
 
-      if(error){
-        Alert.alert(error.message)
-      }else{
-        router.push('/')
-      }
+  const [User, setUser] = useState({} as user)
+  const [loading, setLoading] = useState(false)
+
+  async function sign_out(){
+    const { error } = await supabase.auth.signOut()
+
+    if(error){
+      Alert.alert(error.message)
+    }else{
+      router.push('/')
     }
+  }
 
-    async function get_login_user() {
+  async function get_login_user() {
 
       setLoading(true)
       
@@ -48,20 +72,22 @@ const main = () =>{
       }
 
       setLoading(false)
-    }
+  }
 
-    useEffect(()=>{ get_login_user() },[])
+  function route_pages(route:string){ router.push(route)}
 
-    return(
-        <SafeAreaView 
-          className="w-full h-screen flex-1 justify-between 
-          items-center  bg-green-100"
-        >
+  useEffect(()=>{ get_login_user() },[])
+
+  return(
+    <SafeAreaView 
+      className="w-full h-screen flex-1 justify-between 
+      items-center  bg-green-100"
+    >
             <View
              className="flex-col space-y-2 py-4 px-2 w-full bg-white h-36
              rounded-b-2xl"
             >
-              <Text className="text-teal-800 text-4xl">
+              <Text className="text-teal-800 text-5xl">
                 Welcome Back
               </Text>
 
@@ -76,33 +102,20 @@ const main = () =>{
               <View 
                className="flex flex-row justify-center items-center space-x-2 w-full h-24"
               >
-                <Pressable className="bg-white rounded-md p-4 flex justify-center
-                 items-center w-auto">
-                   <Text>
-                     Option 1
-                   </Text>
-                </Pressable>
 
-                <Pressable className="bg-white rounded-md p-4 flex justify-center
-                 items-center w-auto">
-                  <Text>
-                     Option 2
-                   </Text>
-                </Pressable>
+                {Screens.map((screen)=>(
+                  <Pressable
+                   onPress={() => route_pages(screen.route)}
+                   className="bg-white rounded-md p-4 flex justify-center
+                   items-center w-auto"
+                  >
+                    <Text>
+                     {screen.name}
+                    </Text>
+                  </Pressable>
+                ))}
 
-                <Pressable className="bg-white rounded-md p-4 flex justify-center
-                 items-center w-auto">
-                  <Text>
-                     Option 3
-                   </Text>
-                </Pressable>
-
-                <Pressable className="bg-white rounded-md p-4 flex justify-center
-                 items-center w-auto">
-                  <Text>
-                     Option 4
-                   </Text>
-                </Pressable>
+               
               </View>
 
               <Pressable 
@@ -115,8 +128,8 @@ const main = () =>{
                 </Text>
               </Pressable>
             </View>
-        </SafeAreaView>
-    )
+    </SafeAreaView>
+  )
 }
 
 export default main

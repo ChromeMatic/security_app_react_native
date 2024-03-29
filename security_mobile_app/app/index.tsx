@@ -1,69 +1,58 @@
-import { useCallback } from 'react';
-import { SafeAreaView, Text, View, TouchableOpacity, Image, Alert } from "react-native";
+import React from 'react';
+import { SafeAreaView, View, Text, TouchableOpacity, Image } from 'react-native';
 import {router} from 'expo-router'
-import { useFonts } from 'expo-font'
-import * as SplashScreen from 'expo-splash-screen'
 
-SplashScreen.preventAutoHideAsync();
+const imageUrl = 'https://images.unsplash.com/photo-1587647069256-6ec77c96c2a4?q=80&w=1854&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
 
-const Home = () =>{
+function toLogin(){ router.push('/Login')}
 
-    const img = require('../images/pic.png')
+function Register (){ router.push('/Register') }
 
-    const [ fontsLoaded, fontError ] = useFonts({
-        "Kode Mono": require('../assets/fonts/KodeMono-SemiBold.ttf')
-    })
+const LandingPage = () => {
+  return (
+    <SafeAreaView className="flex-1 justify-center items-center bg-[#1A1710]">
+      
+      <Image 
+        source={{ uri: imageUrl }} 
+        style={{ 
+            width: 395, 
+            height: 575, 
+            marginBottom: 16, 
+            borderTopRightRadius: 25,
+            borderTopLeftRadius: 125,
+            borderBottomRightRadius: 375,
+            borderBottomLeftRadius: 25, 
+        }} 
+      />
 
-    const onLayoutRootView = useCallback(async () => {
-        if (fontsLoaded || fontError) {
-          await SplashScreen.hideAsync();
-        }
-      }, [fontsLoaded, fontError]);
-    
-      if (!fontsLoaded && !fontError) {
-        return null;
-      }
+      <Text className="text-3xl font-bold text-teal-500 mb-6 ">
+        Security App
+      </Text>
 
-    return(
-        <SafeAreaView 
-         onLayout={onLayoutRootView}
-         className="flex-1 items-center justify-center bg-green-100 space-y-6 px-4 py-2"
+      <Text className="text-xl text-center text-teal-600 mb-6 px-4">
+        Protecting your home has never been easier.
+      </Text>
+
+      <View className="flex flex-row space-x-8">
+
+        <TouchableOpacity 
+         onPress={toLogin}
+         className="bg-white py-2.5 px-8 rounded-md shadow-sm"
         >
-            <Text
-                className="text-4xl text-center font-semibold text-teal-800 font-Kode"
-            >
-               Welcome The Security App
-            </Text>
+          <Text className="text-lg font-bold text-teal-700">Get Started</Text>
+        </TouchableOpacity>
 
-            
-            <Image 
-             source={img} 
-             className="h-64 w-1/2 rounded-md"
-            />
+        <TouchableOpacity 
+         onPress={Register}
+         className="bg-white py-2.5 px-8 rounded-md shadow-sm" 
+        >
+          <Text className="text-lg font-bold text-teal-700">Register</Text>
+        </TouchableOpacity>
 
-            <View className="flex-row justify-center items-center w-full space-x-6">
-                <TouchableOpacity
-                 onPress={()=>{ router.push('/Login') }}
-                 className="bg-[#007EF3] rounded-full py-1.5 px-8 w-1/2 flex justify-center items-center"
-                >
-                    <Text className="text-white font-light text-xl">
-                        Login
-                    </Text>
-                </TouchableOpacity>
+      </View>
 
-                <TouchableOpacity
-                 onPress={()=>{ router.push('/Register') }}
-                 className="bg-green-500 rounded-full py-1.5 px-8 w-1/2 flex justify-center items-center"
-                >
-                    <Text className="text-white font-light text-xl">
-                        Register
-                    </Text>
-                </TouchableOpacity>
-            </View>
+    </SafeAreaView>
+  );
+};
 
-        </SafeAreaView>
-    )
-}
-
-
-export  default  Home
+export default LandingPage;

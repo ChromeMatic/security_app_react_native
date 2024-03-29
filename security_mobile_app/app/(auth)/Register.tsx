@@ -15,7 +15,7 @@ const Register = ()=>{
         setLoading(true)
 
         if( firstName === "" || lastName === "" || email === ""){
-            Alert.alert("Please ensure that the first name & last name fields are filled.")
+            Alert.alert("Please ensure that all fields are filled.")
         }else{
             const {
                 error, 
@@ -50,66 +50,66 @@ const Register = ()=>{
     }
 
     return(
-        <SafeAreaView className="w-full h-screen flex-1 items-start px-4 py-2 bg-main">
+        <SafeAreaView className="w-full h-screen flex-1 items-start px-6 py-2 bg-[#1A1710]">
             <View
                 className="w-full h-full flex-1 justify-center space-y-2"
                 >
-                    <Text className="text-white text-center text-3xl py-4">
+                     <Text className="text-teal-500 text-center text-6xl pb-8">
                       Register
                     </Text>
 
-                    <Text className="text-white text-xl">
+                    <Text className="text-teal-600 text-xl font-semibold py-4">
                        First Name
                     </Text>
 
                     <TextInput
-                        className="p-2 rounded-md w-full bg-[#161A29] text-teal-400"
+                        className="p-2 rounded-md w-full bg-white text-teal-400"
                         value={firstName}
                         onChangeText={setFirstName}
                         placeholder="Eg. John"
                     />
 
-                    <Text className="text-white text-xl">
+                    <Text className="text-teal-600 text-xl font-semibold">
                        Last Name
                     </Text>
 
                     <TextInput
-                        className="p-2 rounded-md w-full bg-[#161A29] text-teal-400"
+                        className="p-2 rounded-md w-full bg-white text-teal-400"
                         value={lastName}
                         onChangeText={setLastName}
                         placeholder="Eg. John"
                     />
                     
-                    <Text className="text-white text-xl">
+                    <Text className="text-teal-600 text-xl font-semibold">
                         Email Address
                     </Text>
 
                     <TextInput
-                        className="p-2 rounded-md w-full bg-[#161A29] text-teal-400"
+                         className="p-2 rounded-md w-full bg-white text-teal-400"
                         value={email}
                         onChangeText={setEmail}
                         placeholder="Eg. jhonsnow@gmail.com"
                     />
 
-                    <Text className="text-white text-xl pt-2s">
+                    <Text className="text-teal-600 text-xl font-semibold">
                         Password
                     </Text>
 
                     <TextInput
-                        className="p-2 rounded-md w-full bg-[#161A29] text-white"
+                         className="p-2 rounded-md w-full bg-white text-teal-400"
                         value={password}
                         onChangeText={setPassword}
                         placeholder="Eg. *******"
                         secureTextEntry
                     />
 
-                   <View className="py-6 px-4">
+                   <View className="pt-16 px-4">
                     <Pressable 
                         onPress={signUpWithEmail}
                         disabled={loading}
-                        className="rounded-full px-8 py-4 bg-indigo-500 text-white"
+                        className="rounded-lg px-8 py-2.5 bg-white"
                         >
-                            <Text className="text-center text-white font-semibold">
+                            <Text className="text-center text-teal-800 font-semibold">
                                { loading ? 'Creating An Account....':'SIGN UP' }
                             </Text>
                         </Pressable>
