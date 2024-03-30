@@ -71,7 +71,8 @@ const Login = ()=>{
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                     className="rounded-md"
+                      className="rounded-md"
+                      onPress={() =>{ router.push('/ResetAccount') } }
                     >
                         <Text 
                          className="text-center uppercase font-extrabold text-teal-500 underline"
