@@ -1,8 +1,9 @@
 import { useFonts } from 'expo-font'
-import { Alert, Pressable, SafeAreaView, Text, View} from 'react-native'
+import { Alert, TouchableOpacity, SafeAreaView, Text, View} from 'react-native'
 import { supabase } from "../../lib/supabase";
 import { useState, useEffect } from 'react';
 import {router} from 'expo-router'
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 const main = () =>{
 
@@ -80,53 +81,80 @@ const main = () =>{
 
   return(
     <SafeAreaView 
-      className="w-full h-screen flex-1 justify-between 
-      items-center  bg-green-100"
+      className="w-full h-screen flex flex-col space-y-4 justify-between items-center bg-[#1A1710]"
     >
             <View
-             className="flex-col space-y-2 py-4 px-2 w-full bg-white h-36
-             rounded-b-2xl"
+             className="flex-col space-y-1.5 py-4 px-2 w-full bg-[#202124] h-36
+             rounded-b-lg border-b-2 border-teal-900"
             >
-              <Text className="text-teal-800 text-5xl">
+              <Text className="text-teal-500 text-3xl font-semibold">
                 Welcome Back
               </Text>
 
-              <Text className="text-teal-800 text-xl">
+              <Text className="text-teal-500 text-xl">
                 {User.frist_name} {User.last_name}
+              </Text>
+
+              <Text className="text-teal-500 text-base">
+                {User.email_address}
               </Text>
             </View>
 
-            <View className="flex flex-col p-2 w-full bg-green-100 ">
+            <View 
+             className="flex flex-col p-2.5 w-full bg-[#202124] rounded-t-lg 
+             border-t-2 border-teal-900"
+            >
 
-             
               <View 
-               className="flex flex-row justify-center items-center space-x-2 w-full h-24"
+               className="flex flex-row justify-center items-center space-x-6 w-full h-24"
               >
 
                 {Screens.map((screen)=>(
-                  <Pressable
+                  <TouchableOpacity
                    onPress={() => route_pages(screen.route)}
-                   className="bg-white rounded-md p-4 flex justify-center
-                   items-center w-auto"
+                   className=" rounded-md p-2 flex justify-center
+                   items-center w-20 bg-[#191919]"
                   >
-                    <Text>
+                    { screen.name === "home" ? 
+                      <FontAwesome name="home" size={32} color="#14b8a6" /> 
+                      : '' 
+                    }
+
+                    { screen.name === "Account" ? 
+                      <FontAwesome name="user" size={32} color="#14b8a6" /> 
+                      : '' 
+                    }
+
+                    { screen.name === "Alarm" ? 
+                      <FontAwesome name="exclamation-triangle" size={32} color="#14b8a6" /> 
+                      : '' 
+                    }
+
+                    { screen.name === "Settings" ? 
+                      <FontAwesome name="cog" size={32} color="#14b8a6" /> 
+                      : '' 
+                    }
+
+                    <Text className="capitalize font-semibold text-teal-500">
                      {screen.name}
                     </Text>
-                  </Pressable>
+                  </TouchableOpacity>
                 ))}
 
                
               </View>
 
-              <Pressable 
+              <TouchableOpacity 
                onPress={sign_out}
-               className="bg-white rounded-md p-4 flex justify-center
+               className="bg-[#191919] rounded-md p-1.5 flex flex-col space-y-0.5 justify-center
                items-center w-auto"
               >
-                <Text>
+                <FontAwesome name="sign-out" size={32} color="#14b8a6" /> 
+                <Text className="uppercase font-semibold text-teal-500 text-sm">
                  { loading ? 'Loading...':'Sign Out ' }
                 </Text>
-              </Pressable>
+              </TouchableOpacity>
+
             </View>
     </SafeAreaView>
   )
