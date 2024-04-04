@@ -17,10 +17,9 @@ const settings = () =>{
     return(
         
         <SafeAreaView 
-          className="w-full h-screen flex-1 justify-center 
-          items-center px-4 py-2 bg-green-100"
+         className="w-full h-screen flex flex-col space-y-4 justify-center items-center bg-[#1A1710]"
         >
-            <Text className="text-teal-700 text-4xl">
+            <Text className="text-teal-500 text-4xl font-semibold">
                 Settings
             </Text>
         </SafeAreaView>
