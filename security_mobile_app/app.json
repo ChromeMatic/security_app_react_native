@@ -30,6 +30,12 @@
     "plugins": [
       "expo-router",
       [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow Security Mobile App to use your location."
+        }
+      ],
+      [
         "expo-font",
         {
           "fonts" : [

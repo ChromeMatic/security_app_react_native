@@ -4,16 +4,9 @@ import { supabase } from "../../lib/supabase";
 import { useState, useEffect } from 'react';
 import {router} from 'expo-router'
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { Database } from '../../types/supabase-types'
 
 const main = () =>{
-
-  type user = {
-    id:string,
-    frist_name:string,
-    last_name:string,
-    email_address:string,
-    user_Id:string
-  }
 
   type ScreenRoutesType = {
     name:string,
@@ -39,7 +32,7 @@ const main = () =>{
     },
   ]
 
-  const [User, setUser] = useState({} as user)
+  const [User, setUser] = useState({} as Database['public']['Tables']['UserAccount']['Row'])
   const [loading, setLoading] = useState(false)
 
   async function sign_out(){
