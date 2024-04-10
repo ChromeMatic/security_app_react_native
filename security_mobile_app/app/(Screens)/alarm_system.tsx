@@ -1,6 +1,7 @@
 import { SafeAreaView, Text} from 'react-native'
 import { supabase } from "../../lib/supabase";
 import { useState, useEffect } from 'react';
+import React from 'react';
 
 const alarm_system = () =>{
 

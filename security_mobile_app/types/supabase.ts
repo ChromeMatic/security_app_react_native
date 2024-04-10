@@ -89,6 +89,53 @@ export type Database = {
         }
         Relationships: []
       }
+      user_location: {
+        Row: {
+          accuracy: number
+          altitude: number
+          altitudeAccuracy: number
+          created_at: string
+          heading: number
+          id: string
+          latitude: number
+          longitude: number
+          speed: number
+          user_id: string
+        }
+        Insert: {
+          accuracy: number
+          altitude: number
+          altitudeAccuracy: number
+          created_at?: string
+          heading: number
+          id?: string
+          latitude: number
+          longitude: number
+          speed: number
+          user_id?: string
+        }
+        Update: {
+          accuracy?: number
+          altitude?: number
+          altitudeAccuracy?: number
+          created_at?: string
+          heading?: number
+          id?: string
+          latitude?: number
+          longitude?: number
+          speed?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_user_location_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "UserAccount"
+            referencedColumns: ["user_Id"]
+          },
+        ]
+      }
       UserAccount: {
         Row: {
           created_at: string

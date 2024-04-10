@@ -1,6 +1,6 @@
+import React,{ useState, useEffect } from 'react';
 import { SafeAreaView, Text} from 'react-native'
 import { supabase } from "../../lib/supabase";
-import { useState, useEffect } from 'react';
 
 const settings = () =>{
 

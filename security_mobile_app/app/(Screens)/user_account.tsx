@@ -1,13 +1,19 @@
 import { SafeAreaView, Text, View, TouchableOpacity} from 'react-native'
 import { supabase } from "../../lib/supabase";
 import { useState, useEffect } from 'react';
-import { Database } from '../../types/supabase-types'
+import { Database } from '../../types/supabase'
 import FontAwesome from '@expo/vector-icons/FontAwesome6';
 import * as Location from 'expo-location';
+import React from 'react';
+
 
 const user_account = () =>{
+
+    type _user = Database['public']['Tables']['UserAccount']['Row']
+    type _location = Database['public']['Tables']['user_location']['Insert']
     
-    const [User, setUser] = useState({} as Database['public']['Tables']['UserAccount']['Row'])
+    const [User, setUser] = useState({} as _user)
+    const [Id, setId] = useState("")
     const [location, setLocation] = useState({} as Location.LocationObject);
     const [text, setText] = useState("Set Location" as string)
 
@@ -15,6 +21,7 @@ const user_account = () =>{
         
         const { data: { user } } = await supabase.auth.getUser()
         let user_id:string = ''+user?.id
+        setId(user_id)
         
         if(user_id){
 
@@ -42,11 +49,35 @@ const user_account = () =>{
         
         let location = await Location.getCurrentPositionAsync({});
         setLocation(location);
-        console.info(location.coords)
+        save_location(location.coords)
         setText("Location Saved")
       }
 
     }
+
+    async function save_location(location:_location | any){
+      if(location){
+          const { data, error } = await supabase
+          .from('user_location')
+          .insert([
+            { 
+              user_id: ''+Id,
+              accuracy: Number(location.accuracy),
+              altitude: Number(location.altitude),
+              altitudeAccuracy: Number(location.altitudeAccuracy),
+              heading: Number(location.heading),
+              latitude: Number(location.latitude),
+              longitude: Number(location.longitude),
+              speed: Number(location.speed)
+            }
+          ]) 
+          .select()
+  
+          if(data){ return data }
+  
+          if(error) throw error
+      }
+  }
 
     useEffect(()=>{ get_login_user() },[])
 

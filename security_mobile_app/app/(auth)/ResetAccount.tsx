@@ -1,6 +1,7 @@
 import { SafeAreaView, Image, TextInput, View,Text, TouchableOpacity, Alert } from 'react-native'
 import { useState, useEffect } from 'react';
 import { supabase } from "../../lib/supabase";
+import React from 'react';
 
 
 const reset_account = () =>{

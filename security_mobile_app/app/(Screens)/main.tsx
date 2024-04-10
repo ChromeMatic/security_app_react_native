@@ -1,17 +1,25 @@
 import { useFonts } from 'expo-font'
 import { Alert, TouchableOpacity, SafeAreaView, Text, View} from 'react-native'
 import { supabase } from "../../lib/supabase";
-import { useState, useEffect } from 'react';
 import {router} from 'expo-router'
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Database } from '../../types/supabase-types'
+import { Database } from '../../types/supabase'
+import React,{ useState, useEffect } from 'react';
+import MapView from 'react-native-maps';
 
 const main = () =>{
 
+  //type _loc = Database['public']['Tables']['user_location']['Row']
+
+  type _loc = {
+    latitude: any;
+    longitude: any;
+  }
   type ScreenRoutesType = {
     name:string,
     route:string,
   }
+
 
   let Screens:ScreenRoutesType[] = [
     {
@@ -34,6 +42,8 @@ const main = () =>{
 
   const [User, setUser] = useState({} as Database['public']['Tables']['UserAccount']['Row'])
   const [loading, setLoading] = useState(false)
+  const [location, setLocation] = useState({} as _loc)
+
 
   async function sign_out(){
     const { error } = await supabase.auth.signOut()
@@ -53,7 +63,6 @@ const main = () =>{
       let user_id:string = ''+user?.id
 
       if(user_id){
-
         const { data} = await supabase
         .from('UserAccount')
         .select()
@@ -66,11 +75,34 @@ const main = () =>{
       }
 
       setLoading(false)
+      
+      get_last_location() 
+  }
+
+  async function get_last_location(){
+
+    const { data: { user } } = await supabase.auth.getUser()
+    let _id:string = ''+user?.id
+    
+    if(_id){
+      const { data } = await supabase
+      .from('user_location')
+      .select("latitude,longitude")
+      .eq('user_id',_id)  
+
+      if(data){ 
+        let size:number = data.length -1
+        setLocation(data[size]) 
+      }
+    }
   }
 
   function route_pages(route:string){ router.push(route)}
 
-  useEffect(()=>{ get_login_user() },[])
+  useEffect(()=>{ 
+    get_login_user()
+  },[])
+
 
   return(
     <SafeAreaView 
@@ -91,6 +123,24 @@ const main = () =>{
               <Text className="text-teal-500 text-base">
                 {User.email_address}
               </Text>
+            </View>
+
+            <Text className='text-center text-teal-500 text-xl font-semibold'>
+              Last Current Location {location.latitude}
+            </Text>
+
+
+            <View className="w-full h-96 rounded-md px-2">
+              <MapView
+               className="w-full h-full rounded-md overflow-hidden"
+               initialRegion={{
+                latitude: 18.14170398158974,
+                latitudeDelta: 0.9,
+                longitude: -77.29563344875488,
+                longitudeDelta: 0.8,
+               }}
+              >
+              </MapView>
             </View>
 
             <View 
