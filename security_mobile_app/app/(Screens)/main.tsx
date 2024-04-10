@@ -12,9 +12,10 @@ const main = () =>{
   //type _loc = Database['public']['Tables']['user_location']['Row']
 
   type _loc = {
-    latitude: any;
-    longitude: any;
+    latitude: number;
+    longitude: number;
   }
+
   type ScreenRoutesType = {
     name:string,
     route:string,
@@ -40,9 +41,23 @@ const main = () =>{
     },
   ]
 
+  const oneDegreeOfLongitudeInMeters = 111.32 * 1000;
+  const circumference = (40075 / 360) * 1000;
+
+
   const [User, setUser] = useState({} as Database['public']['Tables']['UserAccount']['Row'])
+  
   const [loading, setLoading] = useState(false)
-  const [location, setLocation] = useState({} as _loc)
+  
+  const [location, setLocation] = useState({
+    latitude: Number(18.1993223945614), 
+    longitude: Number(-77.14977327445396)
+  } as _loc)
+
+  const [Delta, setDelta] = useState({
+    LatDelta: 2,//Number(100 * (1 / (Math.cos(18.14170398158974) * circumference))),
+    LonDelta: 2//Number(100 / oneDegreeOfLongitudeInMeters)
+  })
 
 
   async function sign_out(){
@@ -74,27 +89,7 @@ const main = () =>{
 
       }
 
-      setLoading(false)
-      
-      get_last_location() 
-  }
-
-  async function get_last_location(){
-
-    const { data: { user } } = await supabase.auth.getUser()
-    let _id:string = ''+user?.id
-    
-    if(_id){
-      const { data } = await supabase
-      .from('user_location')
-      .select("latitude,longitude")
-      .eq('user_id',_id)  
-
-      if(data){ 
-        let size:number = data.length -1
-        setLocation(data[size]) 
-      }
-    }
+      setLoading(false) 
   }
 
   function route_pages(route:string){ router.push(route)}
@@ -106,7 +101,7 @@ const main = () =>{
 
   return(
     <SafeAreaView 
-      className="w-full h-screen flex flex-col space-y-4 justify-between items-center bg-[#1A1710]"
+      className="w-full h-screen flex flex-col space-y-6 items-center bg-[#1A1710]"
     >
             <View
              className="flex-col space-y-1.5 py-4 px-2 w-full bg-[#202124] h-36
@@ -126,19 +121,20 @@ const main = () =>{
             </View>
 
             <Text className='text-center text-teal-500 text-xl font-semibold'>
-              Last Current Location {location.latitude}
+              Current Location
             </Text>
 
 
-            <View className="w-full h-96 rounded-md px-2">
+            <View className="w-full h-1/2 rounded-md px-2">
               <MapView
-               className="w-full h-full rounded-md overflow-hidden"
+               className="w-full h-full"
                initialRegion={{
-                latitude: 18.14170398158974,
-                latitudeDelta: 0.9,
-                longitude: -77.29563344875488,
-                longitudeDelta: 0.8,
+                latitude: location.latitude,
+                latitudeDelta: Delta.LatDelta,
+                longitude: location.longitude,
+                longitudeDelta: Delta.LonDelta,
                }}
+               showsUserLocation
               >
               </MapView>
             </View>
