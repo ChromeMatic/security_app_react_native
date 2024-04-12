@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Database } from "../../types/supabase";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import { MaterialIcons } from '@expo/vector-icons'
 import React from 'react';
 import {router} from 'expo-router'
 
@@ -77,6 +78,7 @@ const alarm_system = () =>{
        }
 
     }
+    //<MaterialIcons name="crisis-alert" size={24} color="black" />
 
     function route_pages(route:string){ router.push(route)}
 
@@ -100,9 +102,10 @@ const alarm_system = () =>{
             </Text>
           </View>
 
+          <View className="flex w-full flex-col space-y-6">
             <TouchableOpacity
-              className="border-2 flex flex-col space-y-2 p-2 w-full border-teal-900 rounded-md
-              justify-center items-center"
+             className="border-2 flex flex-col space-y-2 p-2 w-full border-teal-900 rounded-md
+             justify-center items-center bg-white"
               onPress={_Alert}
             >
                 <FontAwesome6 name="bell" size={24} color="#14b8a6" />
@@ -110,6 +113,17 @@ const alarm_system = () =>{
                     Alarm System
                 </Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+              className="border-2 flex flex-col space-y-2 p-2 w-full border-teal-900 rounded-md
+              justify-center items-center bg-white"
+            >  
+                <MaterialIcons name="crisis-alert" size={24} color="#14b8a6" />
+                <Text className="text-teal-500">
+                    PANIC
+                </Text>
+            </TouchableOpacity>
+          </View>
 
             <View 
              className="flex flex-col p-2.5 w-full bg-[#202124] rounded-t-lg 
