@@ -1,10 +1,12 @@
-import { SafeAreaView, Text, View, TouchableOpacity} from 'react-native'
+import { SafeAreaView, Text, View, TouchableOpacity, Alert} from 'react-native'
 import { supabase } from "../../lib/supabase";
 import { useState, useEffect } from 'react';
 import { Database } from '../../types/supabase'
-import FontAwesome from '@expo/vector-icons/FontAwesome6';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import * as Location from 'expo-location';
 import React from 'react';
+import {router} from 'expo-router'
 
 
 const user_account = () =>{
@@ -16,6 +18,32 @@ const user_account = () =>{
     const [Id, setId] = useState("")
     const [location, setLocation] = useState({} as Location.LocationObject);
     const [text, setText] = useState("Set Location" as string)
+    const [loading, setLoading] = useState(false)
+
+    type ScreenRoutesType = {
+      name:string,
+      route:string,
+    }
+  
+  
+    let Screens:ScreenRoutesType[] = [
+      {
+        name:"home",
+        route:"/main"
+      },
+      {
+        name:"Account",
+        route:"/user_account"
+      },
+      {
+        name:"Alarm",
+        route:"/alarm_system"
+      },
+      {
+        name:"Settings",
+        route:"/settings"
+      },
+    ]
 
     async function get_login_user() {
         
@@ -77,14 +105,26 @@ const user_account = () =>{
   
           if(error) throw error
       }
+   }
+
+   async function sign_out(){
+    const { error } = await supabase.auth.signOut()
+
+    if(error){
+      Alert.alert(error.message)
+    }else{
+      router.push('/')
+    }
   }
 
     useEffect(()=>{ get_login_user() },[])
 
+    function route_pages(route:string){ router.push(route)}
+
     return(
         
         <SafeAreaView 
-          className="w-full h-screen flex flex-col space-y-4 justify-start 
+          className="w-full h-screen flex justify-between flex-col space-y-4 
           items-start p-1.5 bg-main"
         >
 
@@ -111,12 +151,75 @@ const user_account = () =>{
              className="rounded-md p-1.5 flex justify-center
              items-center w-full space-x-2 bg-white"
             >
-              <FontAwesome name="location-crosshairs" size={22} color="#14b8a6" /> 
+              <FontAwesome6 name="location-crosshairs" size={22} color="#14b8a6" /> 
               <Text className='text-teal-500 font-semibold'>
                 { text }
               </Text>
             </TouchableOpacity>
           </View>
+
+          <View>
+
+          </View>
+
+          <View 
+             className="flex flex-col p-2.5 w-full bg-[#202124] rounded-t-lg 
+             border-t-2 border-teal-900"
+            >
+
+              <View 
+               className="flex flex-row justify-center items-center space-x-6 w-full h-24"
+              >
+
+                {Screens.map((screen)=>(
+                  <TouchableOpacity
+                   onPress={() => route_pages(screen.route)}
+                   className=" rounded-md p-2 flex justify-center
+                   items-center w-20 bg-[#191919]"
+                  >
+                    { screen.name === "home" ? 
+                      <FontAwesome name="home" size={32} color="#14b8a6" /> 
+                      : '' 
+                    }
+
+                    { screen.name === "Account" ? 
+                      <FontAwesome name="user" size={32} color="#14b8a6" /> 
+                      : '' 
+                    }
+
+                    { screen.name === "Alarm" ? 
+                      <FontAwesome name="exclamation-triangle" size={32} color="#14b8a6" /> 
+                      : '' 
+                    }
+
+                    { screen.name === "Settings" ? 
+                      <FontAwesome name="cog" size={32} color="#14b8a6" /> 
+                      : '' 
+                    }
+
+                    <Text className="capitalize font-semibold text-teal-500">
+                     {screen.name}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+
+               
+              </View>
+
+              <TouchableOpacity 
+               onPress={sign_out}
+               className="bg-[#191919] rounded-md p-1.5 flex flex-col space-y-0.5 justify-center
+               items-center w-auto"
+              >
+                <FontAwesome name="sign-out" size={32} color="#14b8a6" /> 
+                <Text className="uppercase font-semibold text-teal-500 text-sm">
+                 { loading ? 'Loading...':'Sign Out ' }
+                </Text>
+              </TouchableOpacity>
+
+          </View>
+
+          
           
 
         </SafeAreaView>
