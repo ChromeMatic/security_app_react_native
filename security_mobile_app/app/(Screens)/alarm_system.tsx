@@ -20,7 +20,6 @@ const alarm_system = () =>{
       route:string,
     }
   
-  
     let Screens:ScreenRoutesType[] = [
       {
         name:"home",
